@@ -22,7 +22,7 @@ resource "aws_instance" "jenkins_server" {
     instance_type = "t2.micro"
     security_groups = [data.aws_security_group.my_sg.name , data.aws_security_group.jenkins_sg.name]
     key_name = "EC2Key_Mumbai_Region"
-
+    iam_instance_profile = data.aws_iam_instance_profile.iam_role.name
     user_data = <<EOF
     #!/bin/bash
     # Use this for your user data (script without newlines)
@@ -63,4 +63,10 @@ data "aws_security_group" "jenkins_sg" {
   
   id = "sg-0d8f047b000d484ed"
 
+}
+
+data "aws_iam_instance_profile" "iam_role" {
+
+  name = "DemoRoleForEC2"
+  
 }
